@@ -8,6 +8,7 @@ object p4_Class {
 
     val publicMember: Char = 'c'
     private val privateMember: String = this.constructorParam.toString
+
     def getPrivateMember(): String = privateMember
     def printPrivateMember(): Unit = println(privateMember)
   }
@@ -20,5 +21,5 @@ object p4_Class {
   firstClass.printPrivateMember()
 
   val secondClass = new FirstClass(1, "hello", 42.1)
-  println(firstClass == secondClass) // comparing reference
+  println(firstClass == secondClass) // --> false, because comparing reference
 }

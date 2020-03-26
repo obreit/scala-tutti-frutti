@@ -6,13 +6,12 @@ import sections.p3_Functions.{add, oneParam, oneParamDef}
 
 object p7_Apply {
 
-
   oneParam(1)
   oneParam.apply(1)
   add.apply(2, 1)
 
-  // oneParamDef.apply(1) <-- method needs to be unapplied first
-  val oneParamDefUnapplied = oneParamDef _
+  // oneParamDef.apply(1) <-- doesn't compile, method needs to be "lifted" first
+  val oneParamDefUnapplied = oneParamDef _ // --> lifting
   //val oneParamDefUnapplied: Int => String = oneParamDef _ <-- alternative
   oneParamDefUnapplied(1)
 

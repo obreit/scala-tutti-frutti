@@ -14,7 +14,7 @@ object p3_Functions {
   }
   println(noParams) // function value
   println(noParamsDef) // compiler warning but function is called
-  // println(oneParam) <- doesn't compile
+  // println(oneParamDef) <- doesn't compile
   println(oneParam) // function value
   println(noParams())
 }
