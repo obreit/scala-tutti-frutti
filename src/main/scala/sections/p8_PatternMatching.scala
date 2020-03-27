@@ -4,13 +4,20 @@ package sections
 
 object p8_PatternMatching {
 
+  // I'd say this is the backbone of fundamentally sound scala code.
+  // In addition to being a 'switch on legal steroids' it hase close relationships to
+  // case classes, apply, unapply, ADTs, partial functions
+
+  // very basic, like a switch
   val int = 3
   int match {
     case 0 => println("zero")
     case 1 => println("one")
-    case _ => println("other")
+    case _ => println("other") // This is the catch all case (like default in switch), you can use underscore but it is not required.
+                               // It just indicates that you are not interested in the variable (you can also do case x => println(s"other: $x"))
   }
 
+  // you can pattern match on types
   val any: Any = 1
   any match {
     case i: Int => println(s"Int: $i!")
@@ -18,30 +25,52 @@ object p8_PatternMatching {
     case x => println(s"Other: $x")
   }
 
+  // Pattern matching is super useful when you want to match + decompose case classes
   case class AnyCaseClass(a: Any, suffix: String)
   val anyCaseClass = AnyCaseClass(1, "It's an Int!")
   anyCaseClass match {
+    case AnyCaseClass(any, "matches only on this exact string") => println(s"$any")
     case AnyCaseClass(i: Int, suffix) => println(s"$i $suffix")
     case AnyCaseClass(s: String, suffix) => println(s"$s $suffix")
+    // 'acc' is a binding ('@' is the special binding operator) that you can use as a regular variable (e.g. acc.suffix + "more suffix")
     case acc @ AnyCaseClass(_: Boolean, suffix) => println(s"${acc.a} $suffix")
-    case AnyCaseClass(a, suffix) => println(s"$a $suffix") // --> compiler shows warning if we omit this line
+    case AnyCaseClass(a, suffix) => println(s"$a $suffix") // --> try to omit this line, the compiler shows a warning because the pattern match isn't complete
   }
 
+  // You can even decompose nested stuff
   case class Wrapper(i: Int, any: AnyCaseClass)
   val wrapper = Wrapper(42, AnyCaseClass(true, "It's a boolean!"))
   wrapper match {
+    case Wrapper(i, any) if i == 0 /* this is called a guard and the case only matches if the guard evaluates to true */  =>
+      // you can have multiple lines without {} in a case
+      val x = i + 3
+      println(s"$x ---- ${any.a} ${any.suffix}")
     case Wrapper(i, any) if any.a.isInstanceOf[String] => println(s"$i ---- ${any.a} ${any.suffix}")
-    case Wrapper(i, any) if i == 0 => println(s"$i ---- ${any.a} ${any.suffix}")
-    case Wrapper(i, AnyCaseClass(a: Boolean, suffix)) => println(s"$i ---- $a $suffix")
-    // --> doesn't show compile warning
+    case Wrapper(i, acc @ AnyCaseClass(a: Boolean, suffix)) => println(s"$i ---- ${acc.a} $suffix")
+    // --> doesn't show compile warning, probably the compiler can't go that deep (this is different for ADTs, see p9_Trait)
   }
 
+  // The 'unapply' method is the enabler for pattern matching
+  // Go over 'case ReadyForPatternMatch' with your cursor and click command+B (it will show you the 'unapply' which is defined above in the companion...mind = blown)
+  // That's why case classes can be used in pattern matching out of the box -- Their companion already has the 'unapply'
   class ReadyForPatternMatch(val i: Int, val s: String)
   object ReadyForPatternMatch {
+    // see a note on 'Option' in p9_Trait
     def unapply(r: ReadyForPatternMatch): Option[(Int, String)] = Some((r.i, r.s))
   }
   val readyForPatternMatch = new ReadyForPatternMatch(42, "hi")
   readyForPatternMatch match {
     case ReadyForPatternMatch(i, s) => println(s"$i $s")
   }
+
+  // you can also do this crazy thing
+  val r @ ReadyForPatternMatch(i, s) = readyForPatternMatch
+  println(s"${i + 1}, $s")
+  println(r)
+
+  /*
+    A note on 'apply' and 'unapply'.
+    Apply is used to compose sth bigger out of smaller parts (e.g. an instance from it's arguments)
+    Unapply is used to decompose sth into its parts
+   */
 }

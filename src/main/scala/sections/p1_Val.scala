@@ -17,6 +17,6 @@ object p1_Val {
 
   // Var
   // x = 2 --> compile error can't reassign val
-  var badStuff = 42
+  var badStuff = 42 // never do this (the last var we have is in a certain service that shall not be named...you know how that turned out)
   badStuff = 32 // :scream:
 }
