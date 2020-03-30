@@ -17,7 +17,7 @@ if your project doesn't compile.
 - `reload` reloads the sbt stuff -- can be used for example if you add library dependencies
 - `exit` exits the sbt, `:q` exits the console
 
-Useful Intellij commands (just by name since the shortcuts might be different - you search for them in the intellij keymap and update if you want)
+Useful Intellij commands (just by name since the shortcuts might be different, but it might be helpful to know they exist - you search for them in the intellij keymap and update if you want)
 - `cmd + ,` opens the keymap editor where you can check shortcuts and change them
 - `Declaration or Usages` goes to the declaration of the variable the curser is at or list the usages (you can go back with `Back` in `Navigate`)
 - `Type Info` shows the type info of the variable the cursor is at
