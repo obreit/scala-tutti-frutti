@@ -11,4 +11,6 @@ object p6_Object {
     def methodOnObject(i: Int): String = i.toString
   }
   println(MyObject.methodOnObject(1001))
+  import MyObject._
+  println(methodOnObject(100))
 }

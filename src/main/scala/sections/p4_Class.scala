@@ -33,4 +33,18 @@ object p4_Class {
 
   val secondClass = new FirstClass(1, "hello", 42.1)
   println(firstClass == secondClass) // --> false, because classes are compared by reference
+
+  /*
+  // Exercise
+  class MyClass(a: Int, val b: Int, private val c: Int) // explain the difference between a,b,c
+  val myClass = new MyClass(1,2,3)
+  println(myClass.a) // change the code above to make this print "1"
+
+  val myClass2 = new MyClass(4)
+  println(s"${myClass2.a} ${myClass2.b} ${myClass2.c}") // change the code above to make this compile and print "4 5 6"
+
+  val sameOld = new MyClass(1,2,3)
+  val sameOld2 = new MyClass(1,2,3)
+  println(sameOld == sameOld2) // <- what is printed?
+   */
 }

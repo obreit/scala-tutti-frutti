@@ -29,4 +29,19 @@ object p3_Functions {
   // big difference between function and method when using generics
   def genericDef[T](t: T): String = t.toString
   // val genericFunction[T] = (t: T) => t.toString <-- not possible
+
+  /*
+  // Exercise
+  val multiply = ???
+  println(multiply(5, 2)) // implement multiply
+
+  val funStuff = () => multiply(5, 2)
+  println(funStuff) // -> what is printed?
+
+  def curios(): Int = multiply(5, 2)
+  println(curios) // -> what is printed?
+
+  def show(i: Int): String = i.toString
+  // println(show) // <- what is printed?
+   */
 }

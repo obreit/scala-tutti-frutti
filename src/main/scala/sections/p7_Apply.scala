@@ -19,7 +19,7 @@ object p7_Apply {
   overblownAdd(2, 1)
   overblownAdd.apply(2, 1)
 
-  // this function works exactly the same as the 'add' from p3_Functions
+  // this 'overblownAdd' function works exactly the same as the 'add' from p3_Functions
   add.apply(2, 1)
 
   // Methods don't quite work like that
@@ -54,4 +54,19 @@ object p7_Apply {
   // MyCaseClassApproximation.x --> x is not accessible from here
   val caseclassApprox = MyCaseClassApproximation(1, "bar")
   println(caseclassApprox.s)
+
+  /*
+  // Exercise
+  val multiply /* add type here */ = (x, y) => x * y // add the type to make this compile
+
+  val addWithoutSugar = ??? // implement an addition function without syntactic sugar
+  println(addWithoutSugar(41, 1))
+
+  def defAddition(x: Int, y: Int): Int = x + y
+  val defAddLifted = defAddition // make this compile
+  println(defAddLifted.apply(41, 1))
+
+  class MyClass(a: Int, b: Int)
+  val myClass = MyClass(1, 2) // add code to make this compile
+   */
 }

@@ -69,6 +69,37 @@ object p8_PatternMatching {
   println(r)
 
   /*
+  // Exercise
+  case class MyCaseClass(i: Int, s: String)
+  val myCaseClass = ??? // create an instance and update the pattern match so we print the statements below
+  myCaseClass match {
+    case MyCaseClass(i, s) => println(s"$s $i")
+    case _ => println("other")
+  }
+  // 'int is: 42'
+  // 'int is greater 10: 11'
+  // 'string is empty and int is 42'
+
+  case class Wrapped(i: Int, cc: MyCaseClass)
+  Wrapped(1, MyCaseClass(2, "hello")) match {
+    case Wrapped(x, MyCaseClass(y, s)) => println(s"x=$x, y=$y, s=$s, w=$w, cc=$cc") // make this compile
+  }
+
+  case class AnywayCaseClass(any: Any)
+  AnywayCaseClass(1) match {
+    case AnywayCaseClass(s) => println("It's a String!")
+    case AnywayCaseClass(i) => println("It's an Int!") // change the pattern match so it prints this line
+  }
+
+  class UseInPatternMatch(i: Int, s: String)
+  val useInPatternMatch = new UseInPatternMatch(1, "hi")
+  useInPatternMatch match {
+    case UseInPatternMatch(i, s) => println(s"$i $s") // make this compile and print '1 hi'
+  }
+   */
+
+
+  /*
     A note on 'apply' and 'unapply'.
     Apply is used to compose sth bigger out of smaller parts (e.g. an instance from it's arguments)
     Unapply is used to decompose sth into its parts

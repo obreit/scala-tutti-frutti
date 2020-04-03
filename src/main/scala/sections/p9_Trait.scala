@@ -10,24 +10,24 @@ object p9_Trait {
   trait MyTrait {
     def someMember: Double
 
-    def abstractBin(x: Int, y: Int): Int
+    def binaryOp(x: Int, y: Int): Int
 
     // Note that I use the abstract method here!
     // This is useful if you implement some larger "algorithm" which should always behave the same but some parts of it
     // are unique to its subclasses (e.g. a kafka hash partitioner trait could implement everything except the hash function)
     // This style is called templating
-    def implementedToString(x: Int, y: Int): String = abstractBin(x, y).toString
+    def binaryOpToString(x: Int, y: Int): String = binaryOp(x, y).toString
   }
   class Adder extends MyTrait {
     override def someMember: Double = 1.0
-    override def abstractBin(x: Int, y: Int): Int = x + y
+    override def binaryOp(x: Int, y: Int): Int = x + y
   }
   class Subtractor extends MyTrait {
     // note that you can make a 'val' out of a 'def' in a subclass of a trait
     // so you can be more flexible on top of the hierarchy (maybe a subclass implementation of the member needs to behave like a method,
     // whereas another should behave like a value)
     override val someMember: Double = -1.0
-    override def abstractBin(x: Int, y: Int): Int = x - y
+    override def binaryOp(x: Int, y: Int): Int = x - y
   }
   val adder = new Adder
   val subtractor = new Subtractor
@@ -35,12 +35,12 @@ object p9_Trait {
   // this is an anonymous instance of the member trait
   val multiplier = new MyTrait {
     override def someMember: Double = 1.0
-    override def abstractBin(x: Int, y: Int): Int = x * y
+    override def binaryOp(x: Int, y: Int): Int = x * y
   }
 
-  println(adder.implementedToString(10, 5))
-  println(subtractor.implementedToString(10, 5))
-  println(multiplier.implementedToString(10, 5))
+  println(adder.binaryOpToString(10, 5))
+  println(subtractor.binaryOpToString(10, 5))
+  println(multiplier.binaryOpToString(10, 5))
 
   // Traits are very useful to implement so called ADTs (abstract data type)
   // Let's create an "AlertState" ADT

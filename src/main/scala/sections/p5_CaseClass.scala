@@ -37,4 +37,14 @@ object p5_CaseClass {
 
   println(firstClass)
   println(firstCaseClass)
+
+  /*
+  // Exercise
+  case class MyCaseClass(a: Int, b: Int, c: Int)
+  val myCaseClass1 = MyCaseClass(1,2,3)
+  val myCaseClass2 = MyCaseClass(1,2,3)
+  println(myCaseClass1 == myCaseClass2) // what is printed?
+
+  myCaseClass1.a // change the above code to make this fail compilation
+   */
 }

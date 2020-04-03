@@ -33,4 +33,14 @@ object p2_Expressions {
   def unitImplied(i: Int) = {
     val x = i
   }
+
+  /*
+  // Exercise
+  val blockResult: Unit = {
+    val x = 1
+    val y = 41
+    x + y
+  }
+  println(blockResult == 42) // change the code above to make this print 'true'
+  */
 }

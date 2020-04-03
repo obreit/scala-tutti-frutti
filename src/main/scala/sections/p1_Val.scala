@@ -19,4 +19,14 @@ object p1_Val {
   // x = 2 --> compile error can't reassign val
   var badStuff = 42 // never do this (the last var we have is in a certain service that shall not be named...you know how that turned out)
   badStuff = 32 // :scream:
+
+
+/*
+  // Exercise
+  val one = 1 // add a type to this variable
+  val two = 2
+  println() // print "one=?, two=? one+two=?" using string interpolation
+
+  var mapboxFeatureId = "stupidId" // change this line so it makes sense
+ */
 }
