@@ -27,6 +27,18 @@ object p7_Apply {
   val oneParamDefLifted /*: Int => String*/ = oneParamDef _ // --> lifting, can also be written as oneParamDef(_)
   oneParamDefLifted.apply(1)
 
+  // the lifting also works for methods that take multiple parameters
+  def twoParam(x: Int, y: Int): Int = x + y
+  val twoParamLifted = twoParam _
+  twoParamLifted(40, 2)
+  val twoParamLiftedAlternative = twoParam(_, _) // alternativ syntax (but becomes cumbersome for more parameters)
+  twoParamLiftedAlternative(40, 2)
+
+  // you can also only "partially lift" a method with multiple parameters like this
+  val add5 = twoParam(_, 5) // this creates a function that only takes 1 parameter
+  add5(10)
+  add5(20)
+
   class ApplyClass(i: Int) {
     def apply(s: String): String = s"$s$i" // <-- this is my own apply, the rule also holds for it here
   }
@@ -59,11 +71,11 @@ object p7_Apply {
   // Exercise
   val multiply /* add type here */ = (x, y) => x * y // add the type to make this compile
 
-  val addWithoutSugar = ??? // implement an addition function without syntactic sugar
-  println(addWithoutSugar(41, 1))
+  val multiplyWithoutSugar = ??? // implement an addition function without syntactic sugar
+  println(multiplyWithoutSugar(5, 2))
 
   def defAddition(x: Int, y: Int): Int = x + y
-  val defAddLifted = defAddition // make this compile
+  val defAddLifted = ??? // make this compile
   println(defAddLifted.apply(41, 1))
 
   class MyClass(a: Int, b: Int)

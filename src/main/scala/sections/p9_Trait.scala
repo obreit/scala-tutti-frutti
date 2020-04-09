@@ -80,6 +80,28 @@ object p9_Trait {
     }
   }
 
+  /*
+  Exercise
+    complete the code, also with more cases if you like
+
+    trait Pet
+    object Pet {
+      def unapply(s: String): Option[Pet] = ???
+    }
+
+    case class Owner(name: String, rawPet: String)
+    val tintin = Owner("Tintin", "dog")
+    val hermione = Owner("Hermione", "cat")
+      ...
+
+    tintin match {
+      case ??? => println(s"$name is a dog owner")
+      case ??? => println(s"$name is a cat owner")
+        ...
+    }
+
+   */
+
   def parseAlertState: AlertState = "some" match {
     case AlertState(state) => state // wow
     case otherString => throw new Exception(s"Not a valid alert state $otherString")

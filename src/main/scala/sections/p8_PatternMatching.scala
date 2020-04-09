@@ -25,9 +25,26 @@ object p8_PatternMatching {
     case x => println(s"Other: $x")
   }
 
+  // you can have conditions on your pattern match
+  val str: String = ""
+  str match {
+    case "" | "0" | "null" => println("falsly")
+    case _ => println("truthy")
+  }
+
+  // you can also match on types of your classes
+  class ClassInt(val i: Int)
+  class ClassString(val s: String)
+  val classStr: Any = new ClassString("hellop")
+  classStr match {
+    case cs: ClassString => println(cs.s)
+    case ci: ClassInt => println(ci.i)
+  }
+
   // Pattern matching is super useful when you want to match + decompose case classes
   case class AnyCaseClass(a: Any, suffix: String)
   val anyCaseClass = AnyCaseClass(1, "It's an Int!")
+
   anyCaseClass match {
     case AnyCaseClass(any, "matches only on this exact string") => println(s"$any")
     case AnyCaseClass(i: Int, suffix) => println(s"$i $suffix")
@@ -78,7 +95,7 @@ object p8_PatternMatching {
   }
   // 'int is: 42'
   // 'int is greater 10: 11'
-  // 'string is empty and int is 42'
+  // 'int is  is 41 or 42: 41'
 
   case class Wrapped(i: Int, cc: MyCaseClass)
   Wrapped(1, MyCaseClass(2, "hello")) match {
