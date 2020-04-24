@@ -80,6 +80,11 @@ object p9_Trait {
     }
   }
 
+  def parseAlertState: AlertState = "set" match {
+    case AlertState(state) => state // wow
+    case otherString => throw new Exception(s"Not a valid alert state $otherString")
+  }
+
   /*
   Exercise
     complete the code, also with more cases if you like
@@ -101,11 +106,6 @@ object p9_Trait {
     }
 
    */
-
-  def parseAlertState: AlertState = "some" match {
-    case AlertState(state) => state // wow
-    case otherString => throw new Exception(s"Not a valid alert state $otherString")
-  }
 
   /*
     Note on Option

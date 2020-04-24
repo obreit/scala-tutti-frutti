@@ -1,5 +1,9 @@
 This repo contains some very basic scala syntax and examples with explanation of common patterns/pitfalls, etc. 
 
+* [Scala types](https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg)
+  * [Some more explanation](https://docs.scala-lang.org/tour/unified-types.html)
+* [Scala collections](https://alvinalexander.com/scala/understanding-scala-collections-hierarchy-cookbook/)
+
 A minimal sbt project requires a `build.sbt` file in your project root (I think also a `build.properties` in a `project` subfolder)
 
 Some notes on `sbt` + `sbt console` commands: 
