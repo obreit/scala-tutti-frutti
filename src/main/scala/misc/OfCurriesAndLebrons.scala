@@ -119,4 +119,34 @@ object OfCurriesAndLebrons {
 
   def uncurrySoConciseItsAlmostNotUnderstandable[A, B, C](f: A => B => C): (A, B) => C =
     f(_)(_)
+
+  // Compose
+
+  def compose[A, B, C](f: B => C, g: A => B): A => C =
+    a => f(g(a))
+
+  val add10 = (i: Int) => i + 10
+  val makeString = (i: Int) => i.toString
+
+  {
+    val add10ThenMakeString = compose(makeString, add10)
+    val _15: String = add10ThenMakeString(5)
+    println(_15 == "15")
+  }
+
+  // Function composition is a very common pattern, so Scala implements compose on 1-parameter functions.
+  {
+    val add10ThenMakeString = makeString.compose(add10)
+    val _15: String = add10ThenMakeString(5)
+    println(_15 == "15")
+  }
+
+  // Maybe it's a bit confusing that the 2nd function is applied first. So there is also 'andThen' which does it the other way
+  {
+    val add10ThenMakeString = add10.andThen(makeString)
+    val _15: String = add10ThenMakeString(5)
+    println(_15 == "15")
+  }
+
+  // Generally f.andThen(g) == g.compose(f)
 }
