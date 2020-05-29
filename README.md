@@ -23,7 +23,7 @@ if your project doesn't compile.
 
 Useful Intellij commands (just by name since the shortcuts might be different, but it might be helpful to know they exist - you search for them in the intellij keymap and update if you want)
 - `cmd + ,` opens the keymap editor where you can check shortcuts and change them
-- `Declaration or Usages` goes to the declaration of the variable the curser is at or list the usages (you can go back with `Back` in `Navigate`)
+- `Declaration or Usages` goes to the declaration of the variable the cursor is at or list the usages (you can go back with `Back` in `Navigate`)
 - `Type Info` shows the type info of the variable the cursor is at
 - `Find Usages` lists all the usages of a variable
 - `Refactor` in `Main Menu` to change names in the whole project
