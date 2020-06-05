@@ -52,6 +52,29 @@ object MyList {
     case Cons(head, tail) => Cons(head, init(tail))
   }
 
+  def length[T](ls: MyList[T]): Int = ls match {
+    case Empty => 0
+    case Cons(_, tail) => 1 + length(tail)
+  }
+
+  // 2 parameter groups for better type inference
+  def takeWhile[T](list: MyList[T])(p: T => Boolean): MyList[T] = list match {
+    case Cons(head,tail) if p(head) => Cons(head, takeWhile(tail)(p))
+    case _ => Empty
+  }
+  def takeWhileTailRec[T](ls: MyList[T])(p: T => Boolean): MyList[T] = {
+    @tailrec
+    def run(remaining: MyList[T], takenElements: MyList[T]): MyList[T] = remaining match {
+      case Cons(next, rest) if p(next) => run(rest, append(takenElements, next))
+      case _ => takenElements
+    }
+    run(ls, Empty)
+  }
+
+  def concat[T](ls1: MyList[T], ls2: MyList[T]): MyList[T] = ls1 match {
+    case Empty => ls2
+    case Cons(head, tail) => Cons(head, concat(tail, ls2))
+  }
 
 
 

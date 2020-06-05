@@ -56,4 +56,25 @@ object MyListMain extends App {
   printInit(MyList(1,2,3))
   printInit(MyList(1))
   //printInit(Empty) --> throws an error
+
+  println("*" * 100)
+  println("LENGTH")
+  val printLen = printOp("length", MyList.length[String]) _
+  printLen(MyList("a", "b", "c"))
+  printLen(MyList("a"))
+  printLen(MyList())
+
+  println("*" * 100)
+  println("TAKE WHILE")
+  val printTakeWhile = printOp("takeWhile", MyList.takeWhile(_: MyList[String])(_ != "")) _
+  printTakeWhile(MyList("hello", "how", "are", "", "good", "sir"))
+  printTakeWhile(MyList("hello", "how", "are", "you", "good", "sir"))
+  printTakeWhile(MyList())
+
+  println("*" * 100)
+  println("CONCAT")
+  val printConcat = printOp[(MyList[Int], MyList[Int]), MyList[Int]]("concat", (MyList.concat[Int] _).tupled) _
+  printConcat(MyList(1,2,3), MyList(4,5,6))
+  printConcat(MyList(1,2,3), MyList())
+  printConcat(MyList(), MyList(4,5,6))
 }
