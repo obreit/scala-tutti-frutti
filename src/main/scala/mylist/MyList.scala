@@ -8,13 +8,83 @@ import scala.annotation.tailrec
 // 'Lecture 4.4 - Variance (Optional)' and maybe also in 'Lecture 4.7 - Lists'
 sealed trait MyList[+T] {
 
+  def map[U](f: T => U): MyList[U] = this match {
+    case Empty => Empty
+    case head +: tail => f(head) +: tail.map(f)
+
+  /*
+    // Tail recursive solution
+    def mapTailRec[U](f: T => U): MyList[U] = {
+      def run(remaining: MyList[T], result: MyList[U]): MyList[U] = remaining match {
+        case Empty => result
+        case next +: rest => run(rest, f(next) +: result)
+      }
+      run(reverse /* same as this.reverse */, MyList())
+    }
+   */
+  }
+
   /*
     2 things happening here
     1:
-      We define the 'prepend' operation as '+:'. The scala compiler has a rule that
+      Preface:
+      Any method that is defined on a class can be called with omitting the dot '.'
+      class Baby() {
+        def sayHelloTo(name: String): String = s"$name!"
+        def sayHelloToAll(n1: String, n2: String): String = s"$n1 and $n2!"
+      }
+      val baby = new Baby()
+      baby.sayHelloTo("Mom") == baby sayHelloTo("Mom")
+      baby.sayHelloToAll("Mom", "Dad") == baby sayHelloToAll("Mom", "Dad")
+
+      Additionally, if the method only takes one parameter you can omit the parentheses '()'.
+      baby.sayHelloTo("Mom") == baby sayHelloTo "Mary"
+      baby sayHelloToAll "Mom", "Dad" // doesn't compile for methods taking more than 1 parameter
+
+      Usually, this syntax is discouraged, except for operators!
+      Take for example 1 + 2. '+' is not a special keyword, it's just a regular method on the Int class that takes 1 argument.
+      So the rules that we discussed above apply here. (It wouldn't be nice to always have to write
+      1.+(2) 1.-(2) 1./(2) 1.*(2) 1.==(2))
+
+      After you write the nice code, the compiler rewrites 1 + 2 to 1.+(2)
+
+
+      Long story short, we define the 'prepend' operation as '+:'. The scala compiler has a rule that
       methods ending with ':' associate to the right. This allows us to use the prepend operation like this
 
       1 +: MyList(2,3) == MyList(2,3).+:(1) == MyList(1,2,3)
+
+      One question that came up was:
+      Why not just use the case class, which is also called '+:' (with package prefix 'mylist.+:'), as an operator like
+
+      1 mylist.+: MyList(2,3)
+
+      The reason is that the syntax that allows you to write
+
+      1 + 2 or 1 +: MyList(2,3)
+
+      is only defined for methods on classes. So you can't just define a method (or function or case class)
+      and use it in infix notation.
+
+      def add(i: Int, j: Int): Int = i + j
+      1 add 2 // the compiler rewrites this to 1.add(2) which doesn't work
+              // because 'add' is not a method defined on Int
+
+      1 mylist.+: MyList(2,3) // the compiler rewrites this to MyList(2,3).mylist.+:(2,3) which leads to a complete breakdown
+                              // with the message 'error: ';' expected but '.' found'. But if you change the case class name to
+                              // ++++:, then the compiler rewrites 1 ++++: MyList(2,3) to MyList(2,3).++++:(1) and you
+                              // get the expected error that ++++: is not a method defined on MyList
+
+      Some more examples
+
+      1 +: MyList(2,3) // works because '+:' is a method defined on MyList and ends with ':',
+                       // so the compiler rewrites this to MyList(2,3).+:(1).
+
+      MyList(2,3) +: 1 // doesn't work because the method ends with ':' so the compiler tries to rewrite
+                       // it to 1.+:(MyList(1,2,3)) but '+:' is not a method on the Int class
+
+      MyList(2,3).+:(1) // works because you are calling '+:' on an instance of MyList directly without the special syntax
+                        // as you would do with any other method for that class
 
     2:
       Ideally the signature should look like 'def +:(elem: T): MyList[T]', so why do we make it complicated?
