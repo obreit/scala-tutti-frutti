@@ -7,17 +7,10 @@ object MyListMain extends App {
 
   println("*" * 100)
   println("TAIL")
-  val printTail = printOp("tail", (_: MyList[Int]).tail) _
+  val printTail = printOp("tail", (_: MyList[Int]).getTail) _
   printTail(MyList(1,2,3))
   printTail(MyList(1))
   //printTail(MyList()) --> throws an error
-
-  println("*" * 100)
-  println("SET HEAD")
-  val printSetHead = (i: Int) => printOp(s"updateHead with $i", (_: MyList[Int]).updateHead(i)) _
-  printSetHead(2)(MyList(1,2,3))
-  printSetHead(42)(MyList(1))
-  //printSetHead(MyList()) --> throws an error
 
   println("*" * 100)
   println("PREPEND")
