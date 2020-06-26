@@ -1,11 +1,22 @@
 package mylist
 
+/**
+ * Rules for functions on MyList
+ * 1. If generics are too alien: Put the function outside of the trait and use concrete types (e.g. Int, String) instead of generics. After you're done with the implementation, replace the concrete types with generic paramerters.
+ * 2. Let Intellij fill out the pattern match
+ * 3. Handle the trivial Empty case first
+ * 4. Recursively call the function on the tail element (Any function/algorithm on a recursive data structure has to be recursive)
+ * 5. Apply some logic on the head element and combine it with the result of the recursive call
+ */
 sealed trait MyList[+T] {
 
-  def map[U](f: T => U): MyList[U] = this match {
+  def flatMap[U](f: T => MyList[U]): MyList[U] = this match {
     case Empty => Empty
-    case head +: tail => f(head) +: tail.map(f)
+    case head +: tail => f(head) ++ tail.flatMap(f)
   }
+
+  def map[U](f: T => U): MyList[U] =
+    flatMap(x => MyList(f(x)))
 
   // prepend an element
   def +:[U >: T](elem: U): MyList[U] = mylist.+:(elem, this)
