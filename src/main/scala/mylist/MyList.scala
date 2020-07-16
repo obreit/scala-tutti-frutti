@@ -18,6 +18,19 @@ sealed trait MyList[+T] {
   def map[U](f: T => U): MyList[U] =
     flatMap(x => MyList(f(x)))
 
+  def filter(p: T => Boolean): MyList[T] =
+    flatMap(x => if(p(x)) MyList(x) else Empty)
+
+  // this function allows us to use if-guards in a for-comprehension
+  def withFilter(p: T => Boolean): MyList[T] = filter(p)
+
+  def foreach(f: T => Unit): Unit = this match {
+    case Empty => ()
+    case head +: tail =>
+      f(head)
+      tail.foreach(f)
+  }
+
   // prepend an element
   def +:[U >: T](elem: U): MyList[U] = mylist.+:(elem, this)
 

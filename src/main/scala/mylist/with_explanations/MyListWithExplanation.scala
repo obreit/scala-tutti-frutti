@@ -10,6 +10,21 @@ import scala.annotation.tailrec
 // 'Lecture 4.4 - Variance (Optional)' and maybe also in 'Lecture 4.7 - Lists'
 sealed trait MyList[+T] {
 
+  def flatMap[U](f: T => MyList[U]): MyList[U] = this match {
+    case Empty => Empty
+    case head +: tail => f(head) ++ tail.flatMap(f)
+
+    /*
+      def flatMapTailRec[U](f: T => MyList[U]): MyList[U] = {
+        def run(remaining: MyList[T], result: MyList[U]): MyList[U] = remaining match {
+          case Empty => result
+          case head +: tail => run(tail, f(head) ++ result)
+        }
+        run(reverse, Empty)
+      }
+    */
+  }
+
   def map[U](f: T => U): MyList[U] = this match {
     case Empty => Empty
     case head +: tail => f(head) +: tail.map(f)
@@ -24,6 +39,26 @@ sealed trait MyList[+T] {
       run(reverse /* same as this.reverse */, MyList())
     }
    */
+  }
+  def mapViaFlatMap[U](f: T => U): MyList[U] =
+  /*this.*/flatMap(x => MyList(f(x)))
+
+  def filter(p: T => Boolean): MyList[T] = this match {
+    case Empty => Empty
+    case head +: rest if p(head) => head +: rest.filter(p)
+    case _ +: rest => rest.filter(p)
+  }
+  def filterViaFlatMap(p: T => Boolean): MyList[T] =
+  /*this.*/flatMap(x => if(p(x)) MyList(x) else Empty)
+
+  // this function allows us to use if-guards in a for-comprehension
+  def withFilter(p: T => Boolean): MyList[T] = filter(p)
+
+  def foreach(f: T => Unit): Unit = this match {
+    case Empty => ()
+    case head +: tail =>
+      f(head)
+      tail.foreach(f)
   }
 
   /*
