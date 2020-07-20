@@ -105,6 +105,10 @@ case object Empty extends MyList[Nothing]
 case class +:[T](head: T, tail: MyList[T]) extends MyList[T]
 
 object MyList {
+
+  def flatten[T](ls: MyList[MyList[T]]): MyList[T] =
+    ls.flatMap(identity)
+
   def empty[T]: MyList[T] = Empty
 
   def apply[T](ts: T*): MyList[T] =

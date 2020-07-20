@@ -24,6 +24,8 @@ sealed trait MyList[+T] {
       }
     */
   }
+  def flatMapViaMapFlatten[U](f: T => MyList[U]): MyList[U] =
+    MyList.flatten(this.map(f))
 
   def map[U](f: T => U): MyList[U] = this match {
     case Empty => Empty
@@ -257,6 +259,26 @@ case object Empty extends MyList[Nothing]
 case class +:[T](head: T, override val tail: MyList[T]) extends MyList[T]
 
 object MyList {
+
+  def flatten[T](ls: MyList[MyList[T]]): MyList[T] = {
+    ls match {
+      case Empty => Empty
+      case head +: tail => head ++ flatten(tail)
+    }
+
+    /*
+     def flattenTailRec[T](ls: MyList[MyList[T]]): MyList[T] = {
+       def run(remaining: MyList[MyList[T]], result: MyList[T]): MyList[T] = remaining match {
+         case Empty => result
+         case head +: rest => run(rest, head ++ result)
+       }
+       run(ls.reverse, Empty)
+     }
+    */
+  }
+  def flattenViaFlatMap[T](ls: MyList[MyList[T]]): MyList[T] =
+    ls.flatMap(identity)
+
   def empty[T]: MyList[T] = Empty
 
   def apply[T](ts: T*): MyList[T] =
