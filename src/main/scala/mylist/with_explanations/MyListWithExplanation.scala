@@ -63,6 +63,53 @@ sealed trait MyList[+T] {
       tail.foreach(f)
   }
 
+  def forall(p: T => Boolean): Boolean = this match {
+    case Empty => true
+    case head +: tail => p(head) && tail.forall(p)
+
+    /*
+    Tailrec solution
+
+    @tailrec
+    final def forallTailRec(pred: T => Boolean): Boolean = this match {
+      case Empty => true
+      case head +: _ if !pred(head) => false
+      case _ +: rest => rest.forallTailRec(pred)
+    }
+     */
+  }
+
+  def exists(p: T => Boolean): Boolean = this match {
+    case Empty => false
+    case head +: tail => p(head) || tail.exists(p)
+
+    /*
+    Tailrec solution
+    @tailrec
+    final def existsTailRec(p: T => Boolean): Boolean = this match {
+      case Empty => false
+      case head +: _ if p(head) => true
+      case _ +: tail => tail.existsTailRec(p)
+    }
+     */
+  }
+
+  def partition(pred: T => Boolean): (MyList[T], MyList[T]) = {
+    (filter(pred), filter(x => !pred(x)))
+
+    /*
+    // Only going through the input list once
+    def partition2(pred: T => Boolean): (MyList[T], MyList[T]) = {
+      def run(elems: MyList[T], matching: MyList[T], notMatching: MyList[T]): (MyList[T], MyList[T]) = elems match {
+        case Empty => (matching, notMatching)
+        case head +: rest if pred(head) => run(rest, head +: matching, notMatching)
+        case head +: rest => run(rest, matching, head +: notMatching)
+      }
+      run(reverse, Empty, Empty)
+    }
+     */
+  }
+
   /*
     2 things happening here
     1:

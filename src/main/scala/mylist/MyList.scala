@@ -10,6 +10,9 @@ package mylist
  */
 sealed trait MyList[+T] {
 
+  def zipWith[U, V](ls2: MyList[U])(f: (T, U) => V): MyList[V] = ???
+  def zip[U](ls2: MyList[U]): MyList[(T, U)] = ???
+
   def flatMap[U](f: T => MyList[U]): MyList[U] = this match {
     case Empty => Empty
     case head +: tail => f(head) ++ tail.flatMap(f)
@@ -30,6 +33,19 @@ sealed trait MyList[+T] {
       f(head)
       tail.foreach(f)
   }
+
+  def forall(p: T => Boolean): Boolean = this match {
+    case Empty => true
+    case head +: tail => p(head) && tail.forall(p)
+  }
+
+  def exists(p: T => Boolean): Boolean = this match {
+    case Empty => false
+    case head +: tail => p(head) || tail.exists(p)
+  }
+
+  def partition(pred: T => Boolean): (MyList[T], MyList[T]) =
+    (filter(pred), filter(x => !pred(x)))
 
   // prepend an element
   def +:[U >: T](elem: U): MyList[U] = mylist.+:(elem, this)

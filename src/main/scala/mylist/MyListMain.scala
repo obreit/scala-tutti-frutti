@@ -70,4 +70,14 @@ object MyListMain extends App {
   printConcat(MyList(1,2,3), MyList(4,5,6))
   printConcat(MyList(1,2,3), MyList())
   printConcat(MyList(), MyList(4,5,6))
+
+  println("*" * 100)
+  println("PARTITION EXAMPLE")
+
+  val people = MyList(10, 25, 15, 4, 40, 18, 15, 21)
+
+  val (adults, minors) = people.partition(_ >= 18)
+
+  println(s"ADULTS: $adults")
+  println(s"MINORS: $minors")
 }
