@@ -1,6 +1,5 @@
 name := "scala-tutti-frutti"
 
-
 version := "0.1"
 
 
